@@ -1,0 +1,10 @@
+tqdm
+numpy 
+retina-face
+opencv-python
+matplotlib
+tensorflow-gpu==2.1.0
+tensorflow-addons==0.8.3
+scikit-learn
+joblib
+scipy

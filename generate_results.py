@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 import cv2
 
-from net import Facenet
+from models import Facenet
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
@@ -11,23 +11,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 import joblib
-# from keras_vggface.vggface import VGGFace
-# from keras_vggface.utils import preprocess_input
-from utils import find_input_shape, preprocess_face, print_train_results
+from utils import preprocess_face, print_train_results
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 PATH_TO_DATASET_DIR = "datasets/FERET_80x80_EDSR_hr"
-PATH_TO_CLASSIFIER = "models/FERET_80x80_EDSR_hr.h5"
+PATH_TO_CLASSIFIER = "FERET_80x80_EDSR_hr.h5"
 
 PATH_TO_DATASET_FILE = "datasets/FERET_80x80_EDSR_hr.npz"
-FACENET_WEIGHTS = "weights/facenet_weights.h5 "
 
 
 def process_dataset(dataset_path):
     X, y = [], []
-    facenet = Facenet.loadModel(weights=FACENET_WEIGHTS)
-    input_shape_x, input_shape_y = find_input_shape(facenet)
+    facenet = Facenet.loadModel()
+
+    # facenet input tensor size
+    input_shape_x, input_shape_y = (160, 160)
 
     for person in tqdm(os.listdir(dataset_path)):
         person_path = os.path.join(dataset_path, person)

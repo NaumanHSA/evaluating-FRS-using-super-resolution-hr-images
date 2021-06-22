@@ -6,8 +6,7 @@ from tensorflow.keras.preprocessing import image
 import matplotlib.pyplot as plt
 import random
 
-from net import Facenet, RatinaFaceWrapper
-from utils import find_input_shape
+from models import Facenet, RatinaFaceWrapper
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -22,8 +21,11 @@ DATASET_TO_VISUALIZE = "datasets/FERET_80x80"
 def process_dataset():
     X, y = [], []
     facenet = Facenet.loadModel()
+    print(facenet.summary())
     face_detector = RatinaFaceWrapper.build_model()
-    input_shape_x, input_shape_y = find_input_shape(facenet)
+
+    # facenet input tensor size
+    input_shape_x, input_shape_y = (160, 160)
 
     counter = 0
     for person in tqdm(os.listdir(PATH_TO_DATASET_IMAGES)):
@@ -65,7 +67,7 @@ def process_dataset():
                 # save the cropped face                        
                 detected_face = cv2.resize(detected_face, (224, 224))
                 face_path = os.path.join(person_face_path, image_name)
-                cv2.imwrite(face_path, detected_face)
+                # cv2.imwrite(face_path, detected_face)
 
                 if counter % 50 == 0:
                     X_, y_ = np.array(X), np.array(y)
@@ -125,6 +127,6 @@ def visualize():
 
 
 if __name__ == "__main__":
-    # process_dataset()
+    process_dataset()
     # extract_faces_with_n_samples(n=4)
-    visualize()
+    # visualize()

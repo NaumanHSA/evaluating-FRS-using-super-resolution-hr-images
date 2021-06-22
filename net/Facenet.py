@@ -533,5 +533,5 @@ def loadModel(weights=None):
 		raise FileNotFoundError(f"Please download the weights from the link https://drive.google.com/uc?id=1971Xk5RwedbudGgTIrGAL4F7Aifu7id1 and paste it in weights folder inside root directory")
 		
 	model = InceptionResNetV2()			
-	model.load_weights(home+'/.deepface/weights/facenet_weights.h5')
+	model.load_weights(weights)
 	return model
